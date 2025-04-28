@@ -1,0 +1,166 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- стиль для кнопок -->
+    <Style TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10"
+                            RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="buttonScale" ScaleX="1" ScaleY="1"/>
+                        </Border.RenderTransform>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="buttonScale"
+                                                        Storyboard.TargetProperty="ScaleX"
+                                                        To="0.96" 
+                                                        Duration="0:0:0.05"/>  <!-- анимация сжатия по оси х -->
+                                        <DoubleAnimation Storyboard.TargetName="buttonScale"
+                                                        Storyboard.TargetProperty="ScaleY"
+                                                        To="0.96"
+                                                        Duration="0:0:0.05"/>  <!-- анимация сжатия по оси у -->
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        To="#c2185b"
+                                                        Duration="0:0:0.05"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="buttonScale"
+                                                        Storyboard.TargetProperty="ScaleX"
+                                                        Duration="0:0:0.1"
+                                                        DecelerationRatio="0.5"/> <!-- анимация возвращения к оригинальному размеру по оси х -->
+                                        <DoubleAnimation Storyboard.TargetName="buttonScale"
+                                                        Storyboard.TargetProperty="ScaleY"
+                                                        Duration="0:0:0.1"
+                                                        DecelerationRatio="0.5"/>  <!-- анимация возвращения к оригинальному размеру по оси у -->
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <!-- настройки стиля кнопок -->
+        <Setter Property="Background" Value="#d81b60"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#ff1493"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Width" Value="160"/>
+    </Style>
+
+    <!-- стиль для текстовых полей -->
+    <Style TargetType="TextBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Background="#fff0f5"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                        <ScrollViewer x:Name="PART_ContentHost"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <!-- настройки стиля текстовых полей -->
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Background" Value="#f7f7f7"/>
+        <Setter Property="BorderBrush" Value="#ff1493"/>
+        <Setter Property="Foreground" Value="#a30054"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="MinWidth" Value="60"/>
+        <Setter Property="MaxHeight" Value="32"/>
+        <Setter Property="Margin" Value="0,0,10,0"/>
+        <Style.Triggers>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="#d5006d"/>
+                <Setter Property="BorderThickness" Value="2"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- стиль для текстовых блоков -->
+    <Style TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="#a30054"/>
+    </Style>
+
+    <!-- стиль для групповых блоков -->
+    <Style TargetType="GroupBox">
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Background" Value="#f7f7f7"/>
+        <Setter Property="BorderBrush" Value="#ff1493"/>
+        <Setter Property="Foreground" Value="#a30054"/>
+    </Style>
+
+    <!-- стиль для радио-кнопок -->
+    <Style TargetType="RadioButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Background="Transparent">
+                            <Grid>
+                                <Ellipse x:Name="Circle" 
+                                         Stroke="#d5006d" 
+                                         StrokeThickness="2" 
+                                         Width="18" 
+                                         Height="18" />
+                                <Ellipse x:Name="CheckMark" 
+                                         Fill="#d5006d" 
+                                         Visibility="Collapsed"/>
+                            </Grid>
+                        </Border>
+                        <ContentPresenter Margin="5,0,0,0" 
+                                          VerticalAlignment="Center" 
+                                          HorizontalAlignment="Left" 
+                                          RecognizesAccessKey="True"/>
+                    </StackPanel>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Circle" Property="Fill" Value="#d5006d"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="#d5006d"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Margin" Value="5,0"/>
+    </Style>
+
+    
+    <Style TargetType="Separator">
+        <Setter Property="Background" Value="#d5006d"/>
+    </Style>
+    
+</ResourceDictionary>

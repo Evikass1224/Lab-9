@@ -1,0 +1,126 @@
+﻿<Window x:Class="TimeManagement.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeManagement"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Time Management" Height="800" Width="1300"
+        Background="#FFF0F5">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40px"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <!-- первая колонка -->
+            <ColumnDefinition Width="*"/>
+            <!-- оступ между колонками -->
+            <ColumnDefinition Width="30"/>
+            <!-- вторая колонка -->
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Управление временем" FontSize="24" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Center" Foreground="#D5006D" Grid.Row="0" Grid.ColumnSpan="3"/>
+
+        <!-- первая колонка -->
+        <StackPanel Grid.Column="0" Grid.Row="1" Margin="50,0,30,0">
+            <TextBlock Text="Вычитание времени и проверка" FontSize="18" FontWeight="Bold" Margin="0,10,0,25" HorizontalAlignment="Center"/>
+            <GroupBox Header="Ввод времени" Margin="0,0,0,10">
+                <StackPanel Orientation="Vertical" Margin="5">
+
+                    <StackPanel Orientation="Horizontal" Margin="10,5,0,15">
+                        <RadioButton Name="timeKeyboard" Content="Ввести с клавиатуры" IsChecked="True" Margin="0,0,10,0"/>
+                        <RadioButton Name="systemTime" Content="Использовать текущее время"/>
+                    </StackPanel>
+
+                    <!-- ввод времени -->
+                    <StackPanel x:Name="panelTimeInput" Orientation="Horizontal" Margin="10,5,0,10">
+                        <TextBlock Text="Время:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox Name="inputHours" MaxLength="2"/>
+                        <TextBlock Text="часов" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox Name="inputMinutes" MaxLength="2"/>
+                        <TextBlock Text="минут" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    </StackPanel>
+
+                    <Button Content="Установить время" Click="SettingTheTime" HorizontalAlignment="Left" Margin="10,15,0,0"/>
+                </StackPanel>
+            </GroupBox>
+
+            <Separator Margin="0,10,0,10" Height="2"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Текущее время: " FontWeight="Bold"/>
+                <TextBlock Name="presentTime" Foreground="#D5006D" FontWeight="Bold"/>
+            </StackPanel>
+
+            <!-- ввод минут для вычитания -->
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock Text="Минут для вычитания:" VerticalAlignment="Center" Margin="0,0,15,0"/>
+                <TextBox Name="minutesSubtract" MaxLength="9"/>
+                <Button Content="Вычесть" Click="SubtractionOfMinutes"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,5">
+                <TextBlock Text="Время после вычитания минут: " FontWeight="Bold"/>
+                <!-- метка для результата вычитания -->
+                <TextBlock Name="deductionOutput" Foreground="#D5006D" FontWeight="Bold"/>
+            </StackPanel>
+
+            <Separator Margin="0,15,0,10" Height="2"/>
+
+            <!-- вывод проверки первых четырех методов 3 задания лабы 6 -->
+            <Button Content="Проверить" Click="OutputResultsOverTime" HorizontalAlignment="Left" Margin="0,5,0,0"/>
+            <GroupBox Header="Вывод результатов" Margin="0,10,0,10" Height="180">
+                <StackPanel Margin="5">
+                    <TextBlock Name="outputResult" Foreground="#D5006D" FontWeight="Bold" Margin="10,5,0,0"/>
+                </StackPanel>
+            </GroupBox>
+
+        </StackPanel>
+
+        <!-- вторая колонка -->
+        <StackPanel Grid.Column="2" Grid.Row="1" Margin="50,0,30,0">
+
+            <TextBlock Text="Равенство времени" FontSize="18" FontWeight="Bold" Margin="0,10,0,25" HorizontalAlignment="Center"/>
+
+            <!-- ввод первого и второго времени -->
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock Text="Время1:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox Name="hoursTime1"/>
+                <TextBlock Text="часов" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox Name="minutesTime1"/>
+                <TextBlock Text="минут" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock Text="Время2:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox Name="hoursTime2"/>
+                <TextBlock Text="часов" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox Name="minutesTime2"/>
+                <TextBlock Text="минут" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            </StackPanel>
+
+            <Separator Margin="0,30,0,10" Height="2"/>
+
+            <!-- вывод проверки последних двух методов 3 задания лабы 6 - проверка на равенство -->
+            <Button Content="Проверить" Click="EqualityCheck"  HorizontalAlignment="Left" />
+            <GroupBox Header="Проверка на равенство" Margin="0,5,0,10" Height="220">
+                <StackPanel Margin="5">
+                    <TextBlock x:Name="outputComparisonResult" Foreground="#D5006D" FontWeight="Bold" Margin="10,5,0,0"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>
